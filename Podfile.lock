@@ -1,0 +1,46 @@
+PODS:
+  - JadeMarble (0.28.3):
+    - NattyLog (~> 1)
+  - NattyLog (1.2.1)
+  - NuguAgents (0.28.3):
+    - JadeMarble (= 0.28.3)
+    - NattyLog (~> 1)
+    - NuguCore (= 0.28.3)
+    - NuguUtils (= 0.28.3)
+    - SilverTray (~> 1)
+  - NuguCore (0.28.3):
+    - NattyLog (~> 1.0)
+    - NuguUtils (= 0.28.3)
+    - RxSwift (~> 5)
+  - NuguUtils (0.28.3):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - SilverTray (1.2.6)
+
+DEPENDENCIES:
+  - NuguAgents
+  - NuguCore
+  - RxSwift (~> 5.0)
+
+SPEC REPOS:
+  trunk:
+    - JadeMarble
+    - NattyLog
+    - NuguAgents
+    - NuguCore
+    - NuguUtils
+    - RxSwift
+    - SilverTray
+
+SPEC CHECKSUMS:
+  JadeMarble: c47d35e347b0204482c356736701f98d5dbb25b4
+  NattyLog: f9ece0db2fb62178d8246f0ae033a9b64f2d7f30
+  NuguAgents: 910f3ab16e70902a38f210845023247c7478401b
+  NuguCore: 01b2311b4cf8dcd68baa5b88066f6dfaeabb01c6
+  NuguUtils: 696ac97bcccd1ba2eed957d101e782de3d570ebf
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  SilverTray: d006036dd35c1b898497c28dbf06eddce6f1745d
+
+PODFILE CHECKSUM: 911e23eb4cb8411801d82a514d6a7c0ea9cdd13c
+
+COCOAPODS: 1.10.1
