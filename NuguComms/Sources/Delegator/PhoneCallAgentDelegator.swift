@@ -12,7 +12,7 @@ import NuguCore
 import NuguAgents
 import NuguUtils
 
-class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
+public class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
     private weak var agent: PhoneCallAgentProtocol?
     @Atomic var context = PhoneCallContext(
         state: .idle,
@@ -24,11 +24,11 @@ class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
         self.agent = agent
     }
     
-    func phoneCallAgentRequestContext() -> PhoneCallContext {
+    public func phoneCallAgentRequestContext() -> PhoneCallContext {
         return context
     }
     
-    func phoneCallAgentDidReceiveSendCandidates(item: PhoneCallCandidatesItem, header: Downstream.Header) {
+    public func phoneCallAgentDidReceiveSendCandidates(item: PhoneCallCandidatesItem, header: Downstream.Header) {
         os_log("making phone phoneCallAgentDidReceiveSendCandidates %@", "\(item)")
         
         guard let candidates = item.candidates else {
@@ -47,8 +47,6 @@ class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
                             return PhoneCallPerson.Contact(label: label, number: phoneNumger.value.stringValue)
                         }
                         
-                        
-                        
                         return PhoneCallPerson(name: contact.familyName+contact.givenName, type: .contact, profileImgUrl: nil, category: nil, address: nil, businessHours: nil, history: nil, numInCallHistory: nil, token: nil, score: nil, contacts: contactList)
                     }
                     
@@ -56,9 +54,9 @@ class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
                     let context = PhoneCallContext(state: .idle, template: template, recipient: nil)
                     self?.context = context
                     
-                    self?.agent?.requestSendCandidates(playServiceId: item.playServiceId, header: header, completion: { (state) in
+                    self?.agent?.requestSendCandidates(candidatesItem: item, header: header) { (state) in
                         os_log("requestSendCandidates state: %@", "\(state)")
-                    })
+                    }
                 }
             }
             
@@ -69,22 +67,24 @@ class PhoneCallAgentDelegator: PhoneCallAgentDelegate {
         let context = PhoneCallContext(state: .idle, template: template, recipient: nil)
         self.context = context
         
-        agent?.requestSendCandidates(playServiceId: item.playServiceId , header: header) { (state) in
+        agent?.requestSendCandidates(candidatesItem: item, header: header) { (state) in
             os_log("requestSendCandidates state: %@", "\(state)")
         }
     }
     
-    func phoneCallAgentDidReceiveMakeCall(callType: PhoneCallType, recipient: PhoneCallPerson, header: Downstream.Header) -> PhoneCallErrorCode? {
+    public func phoneCallAgentDidReceiveMakeCall(callType: PhoneCallType, recipient: PhoneCallPerson, header: Downstream.Header) -> PhoneCallErrorCode? {
         guard .callar != callType else {
             return .callTypeNotSupported
         }
         
-        guard let address = recipient.address,
-            let phoneCallUrl = URL(string: "tel://\(address)"),
-              UIApplication.shared.canOpenURL(phoneCallUrl) else { return .noSystemPermission }
-        
-        UIApplication.shared.open(phoneCallUrl, options: [:]) { (success) in
-            os_log("making phone call %@", "\(success)")
+        DispatchQueue.main.async {
+            guard let number = recipient.contacts?.first?.number,
+                  let phoneCallUrl = URL(string: "tel://\(number)"),
+                  UIApplication.shared.canOpenURL(phoneCallUrl) else { return }
+            
+            UIApplication.shared.open(phoneCallUrl, options: [:]) { (success) in
+                os_log("making phone call %@", "\(success)")
+            }
         }
         
         return nil

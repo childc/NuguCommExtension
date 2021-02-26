@@ -38,6 +38,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7348084425E677A1002EB2BA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F7AA6FCF25E6633A00C852D5 /* Delegator */,
+				F7AA6FCA25E6631500C852D5 /* Utils */,
+				F7AA6FC525E6628B00C852D5 /* Extensions */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		AC5F46DF430A1C5228AB0178 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +68,6 @@
 		F7AA6FA325E65F0F00C852D5 = {
 			isa = PBXGroup;
 			children = (
-				F7AA6FCF25E6633A00C852D5 /* Delegator */,
 				F7AA6FAF25E65F0F00C852D5 /* NuguComms */,
 				F7AA6FAE25E65F0F00C852D5 /* Products */,
 				AC5F46DF430A1C5228AB0178 /* Pods */,
@@ -77,8 +86,7 @@
 		F7AA6FAF25E65F0F00C852D5 /* NuguComms */ = {
 			isa = PBXGroup;
 			children = (
-				F7AA6FCA25E6631500C852D5 /* Utils */,
-				F7AA6FC525E6628B00C852D5 /* Extensions */,
+				7348084425E677A1002EB2BA /* Sources */,
 				F7AA6FB025E65F0F00C852D5 /* NuguComms.h */,
 				F7AA6FB125E65F0F00C852D5 /* Info.plist */,
 			);
